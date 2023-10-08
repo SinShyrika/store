@@ -1,15 +1,17 @@
 from django.shortcuts import render
 
+
 def home(request):
     return render(request, 'products/index.html')
+
 
 def products(request):
     context = {
         'products': [
             {'image': '/static/vendor/img/products/Adidas-hoodie.png',
-            'name': 'Худи черного цвета с монограммами adidas Originals',
-            'price': '6 090,00 руб.',
-            'description': 'Мягкая ткань для свитшотов. Стиль и комфорт – это образ жизни.',
+             'name': 'Худи черного цвета с монограммами adidas Originals',
+             'price': '6 090,00 руб.',
+             'description': 'Мягкая ткань для свитшотов. Стиль и комфорт – это образ жизни.',
              },
             {'image': '/static/vendor/img/products/Blue-jacket-The-North-Face.png',
              'name': 'Синяя куртка The North Face',
