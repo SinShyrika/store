@@ -1,6 +1,9 @@
 from django.shortcuts import render, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from user.models import User
 from user.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
+from products.models import Basket
+
 from django.contrib import auth, messages
 from django.urls import reverse
 
@@ -55,10 +58,16 @@ def registration(request):
               return render(request,'user/notregistration.html', context)
 
 # Редактирование данных пользователя
+@login_required
 def profile(request):
         # GET запрос - отображение страницы
         if request.method == 'GET':
-            context = {'title': 'Store - Профиль','form': UserProfileForm(instance=request.user)}
+            baskets = Basket.objects.filter(user=request.user)
+            context = {
+                'title': 'Store - Профиль',
+                'form': UserProfileForm(instance=request.user),
+                'baskets': baskets,
+            }
             return render(request, 'user/profile.html', context)
         # POST запрос - отправка данных
         if request.method == 'POST':
@@ -71,6 +80,8 @@ def profile(request):
                 context = {'form': UserProfileForm(instance=request.user)}
                 return render(request,'user/notprofile.html', context)
              
+# Выход пользователя из системы        
 def logout(request):
      auth.logout(request)
      return HttpResponseRedirect(reverse('home'))
+
