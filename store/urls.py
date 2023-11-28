@@ -27,6 +27,7 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('products/', include ('products.urls', namespace='products')),
     path('users/', include ('user.urls', namespace='user')),
+    path('accounts/', include('allauth.urls')),
 ]
 
 if settings.DEBUG:
